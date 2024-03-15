@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A tool to convert JSON to a nested HTML table.">
+    <meta name="keywords" content="JSON, HTML, Table, Converter, Nested, Developer Tools">
+    <title>JSON to Nested HTML Table Converter</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th,
+        td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>JSON to Nested HTML Table Converter</h1>
+        <p>Convert your JSON data into a nested HTML table with our easy-to-use tool.</p>
+    </header>
+    <main>
+        <section>
+            <form id="jsonForm">
+                <label for="converted-table">Paste Your JSON Here:</label><br>
+                <textarea id="converted-table" name="converted-table" rows="4" cols="50"></textarea><br>
+                <input type="submit" value="Convert">
+            </form>
+        </section>
+        <section>
+            <h2>Your Nested JSON Table:</h2>
+            <div id="output" rows="4" cols="50"></div>
+        </section>
+    </main>
+    <footer>
+        <p>© 2024 JSON to Nested HTML Table Converter. All rights reserved.</p>
+    </footer>
+    <script>
+        function escapeHTML(string) {
+            let entityMap = {
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                '"': '&quot;',
+                "'": '&#39;',
+                '/': '&#x2F;'
+            };
+
+            return String(string).replace(/[&<>"'\/]/g, function (s) {
+                return entityMap[s];
+            });
+        }
+
+        function JSONToHTMLTable(data, wrapperClassName, tableClassName) {
+            let rows = Object.keys(data).map((k) => {
+                let valueCell;
+                if (data[k] && typeof data[k] === 'object') {
+                    valueCell = `<td>${JSONToHTMLTable(data[k], tableClassName)}</td>`;
+                } else {
+                    valueCell = `<td>${escapeHTML(data[k])}</td>`;
+                }
+
+                let keyCell = '';
+                if (!Array.isArray(data)) {
+                    keyCell = `<td>${k.replace(/_/g, ' ')}</td>`;
+                }
+
+                return `<tr>${keyCell}${valueCell}</tr>`;
+            });
+
+            let table = `<table class="${tableClassName}"><tbody>${rows.join('')}</tbody></table>`;
+            return `<div class="${wrapperClassName}">${table}</div>`;
+        }
+        document.getElementById('jsonForm').addEventListener('submit', function (event) {
+            try {
+                event.preventDefault();
+                var paragraph = document.getElementById('paragraph').value;
+                document.getElementById('output').innerHTML = JSONToHTMLTable(JSON.parse(paragraph));
+            } catch (err) {
+                alert(`Error: [${err.message}] ${err.stack}`)
+            }
+        });
+    </script>
+</body>
+
+</html>
