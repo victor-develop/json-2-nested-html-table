@@ -34,8 +34,8 @@
     <main>
         <section>
             <form id="jsonForm">
-                <label for="converted-table">Paste Your JSON Here:</label><br>
-                <textarea id="converted-table" name="converted-table" rows="4" cols="50"></textarea><br>
+                <label for="input-json">Paste Your JSON Here:</label><br>
+                <textarea id="input-json" name="input-json" rows="4" cols="50"></textarea><br>
                 <input type="submit" value="Convert">
             </form>
         </section>
@@ -86,10 +86,10 @@
         document.getElementById('jsonForm').addEventListener('submit', function (event) {
             try {
                 event.preventDefault();
-                var paragraph = document.getElementById('paragraph').value;
-                document.getElementById('output').innerHTML = JSONToHTMLTable(JSON.parse(paragraph));
+                var raw_json_string = document.getElementById('input-json').value;
+                document.getElementById('output').innerHTML = JSONToHTMLTable(JSON.parse(raw_json_string));
             } catch (err) {
-                alert(`Error: [${err.message}] ${err.stack}`)
+                alert(`Error: [${err.message}]`)
             }
         });
     </script>
