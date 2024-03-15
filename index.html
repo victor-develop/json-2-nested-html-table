@@ -93,19 +93,17 @@
             }
         });
         window.addEventListener('load', () => {
-            let sample = `
-              {
-                "order_id": "001",
-                "items": [
-                    {
-                        "sku": "A0001"
-                    },
-                    {
-                        "sku": "A0002"
-                    }
-                ]
-              }
-            `
+            let sample = `{
+    "order_id": "001",
+    "items": [
+        {
+            "sku": "A0001"
+        },
+        {
+            "sku": "A0002"
+        }
+    ]
+}`
             document.getElementById('input-json').value = sample;
             document.getElementById('output').innerHTML = JSONToHTMLTable(JSON.parse(sample));
         })
