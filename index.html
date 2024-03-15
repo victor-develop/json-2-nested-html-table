@@ -35,7 +35,7 @@
         <section>
             <form id="jsonForm">
                 <label for="input-json">Paste Your JSON Here:</label><br>
-                <textarea id="input-json" name="input-json" rows="4" cols="50"></textarea><br>
+                <textarea id="input-json" name="input-json" rows="10" cols="50"></textarea><br>
                 <input type="submit" value="Convert">
             </form>
         </section>
@@ -106,6 +106,7 @@
                 ]
               }
             `
+            document.getElementById('input-json').value = sample;
             document.getElementById('output').innerHTML = JSONToHTMLTable(JSON.parse(sample));
         })
     </script>
