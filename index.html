@@ -92,6 +92,22 @@
                 alert(`Error: [${err.message}]`)
             }
         });
+        window.on('load', () => {
+            let sample = `
+              {
+                "order_id": "001",
+                "items": [
+                    {
+                        "sku": "A0001"
+                    },
+                    {
+                        "sku": "A0002"
+                    }
+                ]
+              }
+            `
+            document.getElementById('output').innerHTML = JSONToHTMLTable(JSON.parse(sample));
+        })
     </script>
 </body>
 
